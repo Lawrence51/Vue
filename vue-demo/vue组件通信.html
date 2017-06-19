@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue组件之间通信</title>
+	<script src = 'vue.min.js'></script>
+</head>
+<body>
+<div id="app">
+	<son @connect="say"></son>
+</div>
+<!-- 	<div id="app">
+	<son :message="msg"></son>
+</div> -->
+<script>
+Vue.component('son',{
+	template:`<button @click="send">
+				点击
+			 </button>`,
+	data(){
+		return{
+			msg:'hello,im the data'
+		}
+	},
+	methods:{
+		send(){
+			this.$emit('connect',this.msg);
+		}
+	}
+});
+const app = new Vue({
+	el:"#app",
+	methods:{
+		say(msg){
+			console.log(msg);
+		}
+	}
+});
+/*		Vue.component('son',{
+		props:['message'],
+		template:`<div> {{ message }} </div>`
+	});
+	const app = new Vue({
+		el:"#app",
+		data:{
+			msg:"我是父组件的数据"
+		}
+	});*/
+
+</script>
+</body>
+</html>

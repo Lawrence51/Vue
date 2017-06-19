@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue大法</title>
+	<script src = 'vue.min.js'></script>
+
+</head>
+<body>
+<!-- 	<div id="app">
+<input v-model = "name">
+<span>曾用名：{{ name }}</span>	
+</div>
+<script>
+	let vm = new Vue({
+		el:'#app',
+		data:{
+			name:'刘杰'
+		}
+	});
+</script> -->
+
+<div ref="app" id="app">
+	<p>我是{{ name }}</p>
+</div>
+<script>
+	let vm = new Vue({
+		//挂载元素
+		el : "#app",
+		//实现vm的数据
+		data:{
+			name: '张三',
+			age: 21.233 ,
+			num1:1,
+            num2:3,
+            num3:6,
+            a:0,   
+		},
+		 beforeUpdate(){
+		  console.log('=即将更新渲染=');
+		  let name = this.$refs.app.innerHTML;
+		  console.log('name:'+name);
+		 },
+		 updated(){
+		 	console.log('==update succedd==');
+		 	let name = this.$refs.app.innerHTML;
+		 	console.log('name:' +name);
+		 },
+
+	});
+
+</script>
+</body>
+</html>

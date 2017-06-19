@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>second_demo</title>
+	<script src = "vue.min.js"></script>
+</head>
+<body>
+	<div ref = 'app' id="app">
+		<p> {{ name }} </p>
+	</div>
+	<script>
+		let app = new Vue({
+			el:"#app",
+			data:{
+				name:"lawrence"
+			},
+		 beforeUpdate(){
+		  console.log('=即将更新渲染=');
+		  let name = this.$refs.app.innerHTML; 
+		  console.log('name:'+name);
+		 },
+		 updated(){
+		  console.log('==更新成功==');
+		  let name = this.$refs.app.innerHTML;
+		  console.log('name:'+name);
+		 },
+		  beforeDestroy(){
+		   console.log('销毁之前');
+		 },
+		 destroyed(){
+		   console.log('销毁成功');
+		 }
+		});
+	</script>
+</body>
+</html>

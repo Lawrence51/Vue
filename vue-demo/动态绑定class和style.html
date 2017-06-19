@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态绑定class和style</title>
+	<script src = 'vue.min.js'></script>
+</head>
+<body>
+	<div id="app">
+		<p :class="{ 
+		'active':isActive,
+		'danger':isDanger,
+		'error':isError
+		 }">this is word</p>
+	</div>
+	<script>
+		const vm = new Vue({
+			el:"#app",
+			data:{
+				isActive:true,
+				isDanger:false,
+				isError:false,
+			}
+		});
+	</script>
+</body>
+</html>
