@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+<div id="todo-list-example">
+	<button 
+        v-model="newTodoText"
+        v-on:click="addNewTodo"
+    >添加</button>
+			
+	<ul>
+		<li
+				is="todo-item"
+				v-for="(todo, index) in todos"
+				v-bind:key="todo.id"
+				v-bind:title="todo.title"
+				v-on:remove="todos.splice(index, 1)"
+		></li>
+	</ul>
+</div>
+<script>
+    Vue.component('todo-item', {
+        template: '\
+    <li>\
+      {{ title }}\
+      <button v-on:click="$emit(\'remove\')">X</button>\
+    </li>\
+  ',
+        props: ['title']
+    });
+    new Vue({
+        el: '#todo-list-example',
+        data: {
+            todos: [
+            ],
+            nextTodoId: 1
+        },
+        methods: {
+            addNewTodo: function () {
+                this.todos.push({
+                    title: this.nextTodoId++
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>

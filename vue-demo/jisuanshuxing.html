@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算属性</title>
+	<script src = 'vue.js'></script>
+</head>
+<body>
+	<div id="example">
+	    <p>Original message: "{{ message }}"</p>
+	    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+	    <p>Computed reversed message: "{{ now }}"</p>
+	</div>
+
+	<div id="demo">{{ fullName }}</div>
+	<script>
+		var vm = new Vue({
+			el:"#example",
+			data: {
+				message:'hello'
+			},
+			computed: {
+				//a computed getter
+				reversedMessage: function() {
+					return this.message.split('').reverse().join('')
+				},
+				now: function () {
+				    return new Date()
+				}
+			}
+		});
+		var vmwa = new Vue({
+			el:"#demo",
+			data: {
+				firstName: 'Foo',
+			    lastName: 'Bar',
+			    fullName: 'Foo Bar'
+			},
+			watch: {
+				firstName:function (val) {
+					this.fullName = val + ' ' +this.lastName
+				},
+				lastName: function (val) {
+			        this.fullName = this.firstName + ' ' + val
+			    }
+			}
+		});
+		
+	</script>
+</body>
+</html>

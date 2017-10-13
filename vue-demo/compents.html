@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue大法</title>
+	<script src = 'vue.min.js'></script>
+
+</head>
+<body>
+
+<script>
+export default{
+        data(){
+            return {
+                
+            }
+        },
+        props: {
+        },
+        created:function(){
+        	this.fetchData()
+        },
+        methods:{
+        	fetchData(){
+        		$.ajax({
+        			type:"get",
+        			dataType:"html",
+        			url:'/Resources/GetList.ashx',
+        			success:function(data){
+        				this.show(data);
+        			}
+        		});
+        	},
+        	show(data){
+        	console.log(data);
+        	}
+        }
+    }
+</script>
+</body>
+</html>
