@@ -1,0 +1,104 @@
+{% load url from future %}{% load app_tags %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+  <meta> <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  {% block extrameta %}
+  <meta name="description" content="站亭宝盒 物联网">
+  <meta name="author" content="ilinkin.com.cn">
+  <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico" %}" />
+  {% endblock %}
+  {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+  <title>{% block title %}{% endblock %}</title>
+  {% vendor 'bootstrap.css' %}
+  {% if site_theme %}
+  <link rel="stylesheet" type="text/css" id="site-theme" href="{{site_theme}}" />
+  {% else %}
+  <link rel="stylesheet" type="text/css" href="{% static "infrastructure/css/themes/bootstrap-infrastructure.css" %}" />
+  {% endif %}
+  {% vendor 'font-awesome.css' 'infrastructure.main.css' 'infrastructure.plugins.css' 'infrastructure.responsive.css' %}
+  {% vendor 'login.css' %}
+  {% block extrastyle %}{% endblock %}
+  {% vendor 'jquery.js' %}
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  {% url 'infrastructure:index' as indexurl %}
+
+  {% block extrahead %}{% endblock %}
+  <style>
+    .page-reg-container {
+        margin: 120px auto 0 auto;
+    }
+  </style>
+  <script>
+    window.onload=function () {
+        new Vue({
+            el:"#register_page",
+            data:{
+                user:{
+                    username:'',
+                    password:'',
+                    repassword:'',
+                    email:''
+                },
+                infoshow:false,
+            },
+            methods:{
+                show:function () {
+                    if(this.user.password != this.user.repassword){
+                        this.infoshow = true;
+                    }else{
+                        this.infoshow = false;
+                    }
+                },
+                submit:function (event) {
+                    console.log(this.user);
+                    if(this.user.password != this.user.repassword){
+                        alert("密码不一致");
+                    }else{
+                        var formData = new FormData(event.target);
+                        this.$http.post('', formData).then((data) => {
+                            console.log(data.data);
+                            let status = data.data.status;
+                            switch(status){
+                                case 1 : alert("创建成功，请等待审核！");
+                                break;
+                                case 0 : alert("用户名或邮箱已被使用");
+                                break;
+                                case -1 : alert("信息输入不正确，请完善！");
+                                break;
+                                case 99 : alert("未知错误，请联系管理员！");
+                                break;
+                            }
+                        }, (response) => {
+                            alert("添加失败！")
+                        });
+                    }
+                }
+            }
+        })
+    }
+  </script>
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+<div class="page-reg-container" id="register_page">
+    <h1>欢迎注册物联网信息管理平台</h1>
+    <form action="" method="post" @submit.prevent="submit">
+        {% csrf_token %}
+        <input type="text" style="width:300px;" name="email" class="username" required="required" type="email" placeholder="邮箱" v-model="user.email">
+        <input type="text" style="width:300px;" name="username" class="username" required="required" placeholder="用户名" v-model="user.username">
+        <input type="password" style="width:300px;" name="password" class="password" required="required" placeholder="密码" v-model="user.password">
+        <input type="password" style="width:300px;" name="repassword" class="password" required="required" placeholder="确认密码" v-model="user.repassword" @keyup="show">
+        <p v-show="infoshow" class="text-left"><font style="font-style: oblique;"><i class="fa fa-warning"></i>两次密码不一致</font></p>
+        <button type="submit">注册</button>
+        <div class="error" {% if error_message %} style="top: 27px; display: block;"{% endif %}><span>+</span></div>
+    </form>
+</div>
+  {% vendor 'jquery-ui-sortable.js' 'bootstrap.js' 'infrastructure.main.js' 'infrastructure.responsive.js' 'actionnotifier.js' %}
+  {% vendor 'register.js' %}
+</body>
+</html>
