@@ -1,34 +1,25 @@
-{% load url from future %}{% load app_tags %}{% load i18n %}<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<!DOCTYPE html>
+<html lang="">
 <head>
   <meta> <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
   {% block extrameta %}
-  <meta name="description" content="站亭宝盒 物联网">
-  <meta name="author" content="ilinkin.com.cn">
-  <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}" />
-  <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.ico" %}" />
+  <meta name="description" content=" ">
+  <meta name="author" content=" ">
+  <link rel="icon" type="image/x-icon" href="11.jpg" />
+  <link rel="shortcut icon" type="image/x-icon" href="11.jpg" />
   {% endblock %}
   {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
   <title>{% block title %}{% endblock %}</title>
   {% vendor 'bootstrap.css' %}
-  {% if site_theme %}
-  <link rel="stylesheet" type="text/css" id="site-theme" href="{{site_theme}}" />
-  {% else %}
-  <link rel="stylesheet" type="text/css" href="{% static "infrastructure/css/themes/bootstrap-infrastructure.css" %}" />
-  {% endif %}
-  {% vendor 'font-awesome.css' 'infrastructure.main.css' 'infrastructure.plugins.css' 'infrastructure.responsive.css' %}
-  {% vendor 'login.css' %}
-  {% block extrastyle %}{% endblock %}
-  {% vendor 'jquery.js' %}
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+  <script src="jquery.js"></script>    
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  {% url 'infrastructure:index' as indexurl %}
-
-  {% block extrahead %}{% endblock %}
   <style>
     .page-reg-container {
         margin: 120px auto 0 auto;
@@ -84,9 +75,8 @@
     }
   </script>
 </head>
-<body class="{% block bodyclass %}{% endblock %}">
 <div class="page-reg-container" id="register_page">
-    <h1>欢迎注册物联网信息管理平台</h1>
+    <h1>欢迎注册信息管理平台</h1>
     <form action="" method="post" @submit.prevent="submit">
         {% csrf_token %}
         <input type="text" style="width:300px;" name="email" class="username" required="required" type="email" placeholder="邮箱" v-model="user.email">
@@ -98,7 +88,8 @@
         <div class="error" {% if error_message %} style="top: 27px; display: block;"{% endif %}><span>+</span></div>
     </form>
 </div>
-  {% vendor 'jquery-ui-sortable.js' 'bootstrap.js' 'infrastructure.main.js' 'infrastructure.responsive.js' 'actionnotifier.js' %}
-  {% vendor 'register.js' %}
+<script src="bootstrap.js"></script>   
+<script src="vue.js"></script>   
 </body>
+<!-- 为项目中第一个用到vue的页面，已经完成很久，上传一下，作为留念 -->
 </html>
